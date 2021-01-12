@@ -1,2 +1,2 @@
-a = "aaaa" + "aaaa"
-print(a)
+a = {}
+print(a[10])

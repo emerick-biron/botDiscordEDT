@@ -6,6 +6,7 @@ import locale
 from operator import itemgetter
 import discord
 from discord.ext import commands
+import json
 
 
 def get_desc(description):
@@ -40,29 +41,38 @@ def print_cal(cal):
             print("-------------------------")
 
 
-def print_cal_today(d):
+def print_cal_today(ctx, d):
     res = []
-    for component in cal.walk():
-        if component.name == "VEVENT":
-            summary = component.get('summary')
-            dtstart = component.decoded('dtstart')
-            dtend = component.decoded('dtend')
-            description = get_desc(component.get('description'))
-            location = component.get('location')
-            dtstart = dtstart.astimezone(timezone("Europe/Paris"))
-            dtend = dtend.astimezone(timezone("Europe/Paris"))
-            if d.date() == dtstart.date():
-                time = dtstart.time().isoformat('minutes') + " - " + dtend.time().isoformat('minutes')
-                res.append([summary, time, description, location])
-    res = sorted(res, key=itemgetter(1))
-    result = "**"
-    result += d.strftime("%A %d %B %Y")
-    result += "**"
-    result += "```"
-    result += "\n\n"
-    result += get_res_str(res)
-    result += "```"
-    return result
+    try:
+        with open("data.json", "r") as f:
+            data = json.load(f)
+        calendar = requests.get(data[str(ctx.message.author)]).text
+        cal = Calendar.from_ical(calendar)
+    except KeyError:
+        return ("Aucun lien iCal n'a été définit.\nPour en définir un faites : ``!linkICal {lien iCal}``\nPour plus "
+                "d'informations faites : ``!help``")
+    else:
+        for component in cal.walk():
+            if component.name == "VEVENT":
+                summary = component.get('summary')
+                dtstart = component.decoded('dtstart')
+                dtend = component.decoded('dtend')
+                description = get_desc(component.get('description'))
+                location = component.get('location')
+                dtstart = dtstart.astimezone(timezone("Europe/Paris"))
+                dtend = dtend.astimezone(timezone("Europe/Paris"))
+                if d.date() == dtstart.date():
+                    time = dtstart.time().isoformat('minutes') + " - " + dtend.time().isoformat('minutes')
+                    res.append([summary, time, description, location])
+        res = sorted(res, key=itemgetter(1))
+        result = "**"
+        result += d.strftime("%A %d %B %Y")
+        result += "**"
+        result += "```"
+        result += "\n\n"
+        result += get_res_str(res)
+        result += "```"
+        return result
 
 
 bot = commands.Bot(command_prefix='!', help_command=None)
@@ -77,23 +87,25 @@ async def on_ready():
 
 @bot.command()
 async def linkICal(ctx, link):
-    global url
-    global calendar
-    global cal
     url = link
     try:
         calendar = requests.get(url).text
-        cal = Calendar.from_ical(calendar)
     except:
         await ctx.send("URL invalide")
     else:
+        key = str(ctx.message.author)
+        with open("data.json", "r") as f:
+            data = json.load(f)
+            data[key] = url
+        with open("data.json", "w") as f:
+            json.dump(data, f)
         await ctx.send("Linked !")
 
 
 @bot.command()
 async def today(ctx):
     try:
-        await ctx.send(print_cal_today(datetime.today()))
+        await ctx.send(print_cal_today(ctx, datetime.today()))
     except NameError:
         await ctx.send(
             "Aucun lien iCal n'a été définit.\nPour en définir un faites : ``!linkICal {lien iCal}``\nPour plus "
