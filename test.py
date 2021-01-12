@@ -1,8 +1,3 @@
-a = """A1-Semestre-1
-CHOLLET   ANTOINE
-A valider
-MAZARS-CHAPELON   AGNES
-(Exporté le:11/01/2021 01:11)"""
-
-b = a.split("\n")
-print("\n".join(b[:-1]))
+a = ["17:45 - 18:45", "15:00 - 16:00", "08:00 - 10:00", "10:15 - 13:15"]
+a.sort()
+print(a)
