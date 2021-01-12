@@ -4,6 +4,7 @@ from datetime import *
 from pytz import timezone
 import locale
 from operator import itemgetter
+import discord
 
 
 def getDesc(description):
@@ -58,6 +59,10 @@ def printCalToday(d):
     print(d.strftime("%A %w %B %Y"), "\n\n")
     print(getResStr(res))
 
+
+bot = discord.Client()
+token = "Nzk4NTc2MTc5OTI5Mjg0NjQ5.X_3CBg.yMEAV1hqJ7XqY3Hgep2poWyXe98"
+bot.run(token)
 
 url = "https://proseconsult.umontpellier.fr/jsp/custom/modules/plannings/direct_cal.jsp?data=58c99062bab31d256bee14356aca3f2423c0f022cb9660eba051b2653be722c431b66c493702208e664667048bc04373dc5c094f7d1a811b903031bde802c7f59b21846d3c6254443d7b6e956d3145c6e0d5bac87b70fdd185b8b86771d71211f59e59934f30faea6068e5857005c27f166c54e36382c1aa3eb0ff5cb8980cdb,1"
 calendar = requests.get(url).text
