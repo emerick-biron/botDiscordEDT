@@ -1,5 +1,4 @@
-git+https://github.com/Rapptz/discord.py
-dnspython==1.16.0
-icalendar==4.0.7
-pytz==2020.5
-requests==2.25.1
+icalendar
+pytz
+requests
+discord.py

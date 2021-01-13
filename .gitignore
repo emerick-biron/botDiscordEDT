@@ -1,4 +1,4 @@
 .idea
 venv
-token.txt
-test.py
+src/token.txt
+src/test.py
