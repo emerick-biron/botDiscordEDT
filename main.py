@@ -11,7 +11,10 @@ import json
 
 
 def get_token():
-    
+    file = open("token.txt", 'r')
+    token = file.read()
+    file.close()
+    return token
 
 
 def get_desc(description):
@@ -139,5 +142,4 @@ async def help(ctx):
     await ctx.send(text)
 
 
-token = ""
-bot.run(token)
+bot.run(get_token())
