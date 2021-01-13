@@ -1,2 +1,4 @@
 .idea/
 images/
+venv/
+token.txt
