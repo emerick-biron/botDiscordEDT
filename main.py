@@ -10,6 +10,10 @@ from discord.ext import commands
 import json
 
 
+def get_token():
+    
+
+
 def get_desc(description):
     a = description.strip("\n").split("\n")
     res = "\n".join(a[:-1])
@@ -135,5 +139,5 @@ async def help(ctx):
     await ctx.send(text)
 
 
-token = "Nzk4NTc2MTc5OTI5Mjg0NjQ5.X_3CBg.yMEAV1hqJ7XqY3Hgep2poWyXe98"
+token = ""
 bot.run(token)
