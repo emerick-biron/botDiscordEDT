@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import requests
 from icalendar import Calendar
 from datetime import *
@@ -49,8 +50,8 @@ def print_cal_today(ctx, d):
         calendar = requests.get(data[str(ctx.message.author)]).text
         cal = Calendar.from_ical(calendar)
     except KeyError:
-        return ("Aucun lien iCal n'a été définit.\nPour en définir un faites : ``!linkICal {lien iCal}``\nPour plus "
-                "d'informations faites : ``!help``")
+        return ("Aucun lien iCal n'a été définit.\nPour en définir un faites : ``?linkICal {lien iCal}``\nPour plus "
+                "d'informations faites : ``?help``")
     else:
         for component in cal.walk():
             if component.name == "VEVENT":
@@ -75,13 +76,13 @@ def print_cal_today(ctx, d):
         return result
 
 
-bot = commands.Bot(command_prefix='!', help_command=None)
+bot = commands.Bot(command_prefix='?', help_command=None)
 
 
 @bot.event
 async def on_ready():
     locale.setlocale(locale.LC_TIME, '')
-    await bot.change_presence(status=discord.Status.online, activity=discord.Game("!help"))
+    await bot.change_presence(status=discord.Status.online, activity=discord.Game("?help"))
     print("Ready!")
 
 
@@ -108,8 +109,8 @@ async def today(ctx):
         await ctx.send(print_cal_today(ctx, datetime.today()))
     except NameError:
         await ctx.send(
-            "Aucun lien iCal n'a été définit.\nPour en définir un faites : ``!linkICal {lien iCal}``\nPour plus "
-            "d'informations faites : ``!help``")
+            "Aucun lien iCal n'a été définit.\nPour en définir un faites : ``?linkICal {lien iCal}``\nPour plus "
+            "d'informations faites : ``?help``")
 
 
 @bot.command()
@@ -119,7 +120,7 @@ async def helpICal(ctx):
     text += "Sélectionnez votre(s) groupe(s) d'enseignement(s) dans l'onglet Préférences.\n"
     text += "Rendez vous dans l'onglet iCal et sélectionnez le lien présent.\n"
     text += "Attention ce lien iCal n'est valable que pour la sélection actuelle de vos groupes d'enseignement. Si " \
-            "vous modifiez votre sélection de groupes d'enseignement il faut ré-exécuter la commande ``!linkICal {" \
+            "vous modifiez votre sélection de groupes d'enseignement il faut ré-exécuter la commande ``?linkICal {" \
             "lien iCal}`` avec le nouveau lien iCal"
     await ctx.send(text)
 
@@ -127,10 +128,10 @@ async def helpICal(ctx):
 @bot.command()
 async def help(ctx):
     text = "**Commandes EDT :**\n\n"
-    text += ":small_blue_diamond:``!linkICal {lien iCal}`` : permet de lier le bot avec votre EDT personnel. Pour " \
-            "savoir comment obtenir ce lien faites : ``!helpICal``.\n"
-    text += ":small_blue_diamond:``!today`` : permet d'obtenir votre emploi du temps du jour.\n"
-    text += ":small_blue_diamond:``!help`` : avoir un aperçu des commandes.\n"
+    text += ":small_blue_diamond:``?linkICal {lien iCal}`` : permet de lier le bot avec votre EDT personnel. Pour " \
+            "savoir comment obtenir ce lien faites : ``?helpICal``.\n"
+    text += ":small_blue_diamond:``?today`` : permet d'obtenir votre emploi du temps du jour.\n"
+    text += ":small_blue_diamond:``?help`` : avoir un aperçu des commandes.\n"
     await ctx.send(text)
 
 
