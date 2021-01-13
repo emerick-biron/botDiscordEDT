@@ -11,11 +11,11 @@ Ce bot permet d'obtenir votre emploi du temps d'étudiant du jour avec un simple
 ## Première étape : récupérer le lien iCal de votre emploi du temps
 
 1. Pour les étudiant de l'UM : rendez vous sur l'ENT > Planning 20-21.
-<img src="./ressources/planningEtudiant.png" alt="planningEtudiant" width="100"/>
+<img src="./ressources/planningEtudiant.PNG" alt="planningEtudiant" width="100"/>
 2. Sélectionnez votre(s) groupe(s) d'enseignement(s) dans l'onglet Préférences.
-<img src="./ressources/préférences.png" alt="planningEtudiant" width="500"/>
+<img src="./ressources/préférences.PNG" alt="groupesEnseignements" width="500"/>
 3. Rendez vous dans l'onglet iCal et sélectionnez le lien présent.
-<img src="./ressources/lienICal.png" alt="lienICal" width="500"/>
+<img src="./ressources/lienICal.PNG" alt="lienICal" width="500"/>
 
 Attention ce lien iCal n'est valable que pour la sélection actuelle de vos groupes d'enseignement.
 Si vous modifiez votre sélection de groupes d'enseignement il faudra associer le nouveau lien iCal au bot
