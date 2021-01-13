@@ -1,4 +1,4 @@
-.idea/
-images/
-venv/
+.idea
+venv
 token.txt
+test.py
